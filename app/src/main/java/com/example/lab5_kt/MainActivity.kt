@@ -1,6 +1,7 @@
 package com.example.lab5_kt
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
@@ -12,6 +13,11 @@ import androidx.core.view.WindowInsetsCompat
 
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "LAB5_ANIM"
+    }
+
+    private lateinit var button1: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,18 +27,31 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val button1: Button = findViewById(R.id.button1)
+        button1 = findViewById(R.id.button1)
         button1.setOnClickListener { executeAnimation1() }
     }
+
 
     private fun executeAnimation1() {
         val animation1 = AnimationUtils.loadAnimation(this, R.anim.animation1)
         val imageView: ImageView = findViewById(R.id.imageView)
-        imageView.startAnimation(animation1)
         val imageView2: ImageView = findViewById(R.id.imageView2)
+        Log.v(TAG, "before start animation")
+        imageView.startAnimation(animation1)
         imageView2.startAnimation(animation1)
+        Log.v(TAG, "after start animation")
         imageView.visibility = View.INVISIBLE
         imageView2.visibility = View.INVISIBLE
+        Log.v(TAG, "after set visibility")
+        button1.isEnabled = false
+        Thread {
+            Thread.sleep(8000)
+            runOnUiThread {
+                button1.isEnabled = true
+                imageView.visibility = View.VISIBLE
+                imageView2.visibility = View.VISIBLE
+            }
+        }.start()
 
     }
 }
