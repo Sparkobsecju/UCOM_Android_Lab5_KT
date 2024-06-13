@@ -29,6 +29,24 @@ class MainActivity : AppCompatActivity() {
         }
         button1 = findViewById(R.id.button1)
         button1.setOnClickListener { executeAnimation1() }
+        val button2: Button = findViewById(R.id.button2)
+        button2.setOnClickListener {
+            val imageView: ImageView = findViewById(R.id.imageView)
+            val imageView2: ImageView = findViewById(R.id.imageView2)
+            imageView.visibility = View.VISIBLE
+            imageView2.visibility = View.VISIBLE
+        }
+        val button3: Button = findViewById(R.id.button3)
+        button3.setOnClickListener {
+            executeAnimation2()
+        }
+    }
+
+    private fun executeAnimation2() {
+        val animation2 = AnimationUtils.loadAnimation(this, R.anim.animation2)
+        val imageView: ImageView = findViewById(R.id.imageView)
+        imageView.startAnimation(animation2)
+
     }
 
 
@@ -46,11 +64,7 @@ class MainActivity : AppCompatActivity() {
         button1.isEnabled = false
         Thread {
             Thread.sleep(8000)
-            runOnUiThread {
-                button1.isEnabled = true
-                imageView.visibility = View.VISIBLE
-                imageView2.visibility = View.VISIBLE
-            }
+            runOnUiThread { button1.isEnabled = true }
         }.start()
 
     }
