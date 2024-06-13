@@ -40,6 +40,16 @@ class MainActivity : AppCompatActivity() {
         button3.setOnClickListener {
             executeAnimation2()
         }
+        val button4: Button = findViewById(R.id.button4)
+        button4.setOnClickListener {
+            executeAnimation3()
+        }
+    }
+
+    private fun executeAnimation3() {
+        val animation3 = AnimationUtils.loadAnimation(this, R.anim.animation3)
+        val imageView: ImageView = findViewById(R.id.imageView)
+        imageView.startAnimation(animation3)
     }
 
     private fun executeAnimation2() {
